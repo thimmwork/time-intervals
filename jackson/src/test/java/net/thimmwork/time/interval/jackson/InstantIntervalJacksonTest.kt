@@ -1,0 +1,36 @@
+package net.thimmwork.time.interval.jackson
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import net.thimmwork.time.interval.InstantInterval
+import net.thimmwork.time.interval.instantInterval
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import java.time.ZoneId
+
+class InstantIntervalJacksonTest {
+
+    private val objectMapper = ObjectMapper()
+
+    @Before
+    fun setUp() {
+        objectMapper.registerModule(MODULE)
+    }
+
+    @Test
+    fun `deserialize JSON to InstantInterval`() {
+        val actualInterval = objectMapper.readValue("{ \"start\": \"2018-01-01T00:00:00Z\", \"end\": \"2019-01-01T00:00:00Z\" }", InstantInterval::class.java)
+
+        val expected = instantInterval("2018-01-01T00:00", "2019-01-01T00:00", ZoneId.of("UTC"))
+        assertEquals(expected, actualInterval)
+    }
+
+    @Test
+    fun `serialize InstantInterval to JSON`() {
+        val instantInterval = instantInterval("2018-01-01T00:00", "2019-01-01T00:00", ZoneId.of("UTC"))
+        val actualJson = objectMapper.writeValueAsString(instantInterval)
+
+        val expected = "{\"start\":\"2018-01-01T00:00:00Z\",\"end\":\"2019-01-01T00:00:00Z\"}"
+        assertEquals(expected, actualJson)
+    }
+}
