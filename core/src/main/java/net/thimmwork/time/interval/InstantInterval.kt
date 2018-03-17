@@ -9,15 +9,7 @@ import java.time.ZoneId
 class InstantInterval(
         start: Instant = Infinity.INSTANT_INTERVAL.start,
         end: Instant = Infinity.INSTANT_INTERVAL.end
-) {
-    private val interval: Range<Instant>;
-
-    init {
-        interval = Range.closedOpen(start, end)
-    }
-
-    val start get() = interval.lowerEndpoint()
-    val end get() = interval.upperEndpoint()
+) : AbstractInterval<Instant>(Range.closedOpen(start, end)){
 
     fun normalize(): InstantInterval {
         val minInstant = Infinity.INSTANT_INTERVAL.start
@@ -32,25 +24,6 @@ class InstantInterval(
             end
         return InstantInterval(start, end)
     }
-
-    fun contains(other: InstantInterval) : Boolean {
-        return !this.start.isAfter(other.start) && !this.end.isBefore(other.end)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as InstantInterval
-
-        if (interval != other.interval) return false
-
-        return true
-    }
-
-    override fun hashCode() = interval.hashCode()
-
-    override fun toString() = "InstantInterval(begin=$start,end=$end)"
 }
 
 fun instantInterval(dateTimeStart: String, dateTimeEnd: String, zoneId: ZoneId): InstantInterval {
