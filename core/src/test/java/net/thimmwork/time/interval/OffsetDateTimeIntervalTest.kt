@@ -2,17 +2,20 @@ package net.thimmwork.time.interval
 
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
+import java.time.OffsetDateTime
 import java.time.OffsetDateTime.parse
 import java.time.ZoneId
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class OffsetDateTimeIntervalTest {
+    val year2018withCEToffset = OffsetDateTimeInterval(parse("2018-01-01T00:00:00+01:00"), parse("2019-01-01T00:00:00+01:00"))
+
     @Test
     fun `Infiniy contains the year 2018 CET`() {
         val infinity = Infinity.INSTANT_INTERVAL
 
-        val year2018withCEToffset = OffsetDateTimeInterval(parse("2018-01-01T00:00:00+01:00"), parse("2018-12-31T00:00:00+01:00"))
         assertTrue { infinity.contains(year2018withCEToffset.toInstantInterval()) }
     }
 
@@ -34,4 +37,10 @@ class OffsetDateTimeIntervalTest {
         assertEquals(expected, normalized)
     }
 
+    @Test
+    fun `2018 contains first and last milli of the year, but not first milli of 2019`() {
+        assertTrue { year2018withCEToffset.contains(parse("2018-01-01T00:00:00.000+01:00")) }
+        assertTrue { year2018withCEToffset.contains(parse("2018-12-31T23:59:59.999+01:00")) }
+        assertFalse { year2018withCEToffset.contains(parse("2019-01-01T00:00:00.000+01:00")) }
+    }
 }

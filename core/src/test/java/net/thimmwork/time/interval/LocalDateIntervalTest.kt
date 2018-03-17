@@ -4,14 +4,17 @@ import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.LocalDate.parse
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class LocalDateIntervalTest {
+    private val interval2018 = localDateInterval("2018-01-01", "2018-12-31")
+
     @Test
     fun `Infiniy contains the year 2018`() {
         val infinity = Infinity.LOCAL_DATE_INTERVAL
 
-        assertTrue { infinity.contains(localDateInterval("2018-01-01", "2018-12-31")) }
+        assertTrue { infinity.contains(interval2018) }
     }
 
     @Test
@@ -30,6 +33,13 @@ class LocalDateIntervalTest {
 
         val expected = LocalDateInterval(hugeInterval.start, parse("4000-12-31"))
         assertEquals(expected, normalized)
+    }
+
+    @Test
+    fun `2018 contains first and last day of the year, but not first day of 2019`() {
+        assertTrue { interval2018.contains(parse("2018-01-01")) }
+        assertTrue { interval2018.contains(parse("2018-12-31")) }
+        assertFalse { interval2018.contains(parse("2019-01-01")) }
     }
 
 }

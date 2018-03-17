@@ -7,15 +7,7 @@ import java.time.OffsetDateTime
 class OffsetDateTimeInterval(
         start: OffsetDateTime,
         end: OffsetDateTime
-) {
-    val interval: Range<OffsetDateTime>
-
-    init {
-        interval = Range.closedOpen(start, end)
-    }
-
-    val start get() = interval.lowerEndpoint()
-    val end get() = interval.upperEndpoint()
+) : AbstractInterval<OffsetDateTime>(Range.closedOpen(start, end)) {
 
     fun normalize(): OffsetDateTimeInterval {
         val minInstant = Infinity.INSTANT_INTERVAL.start
