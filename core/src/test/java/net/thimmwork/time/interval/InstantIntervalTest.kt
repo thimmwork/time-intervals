@@ -9,6 +9,13 @@ import kotlin.test.assertTrue
 
 class InstantIntervalTest {
     @Test
+    fun `InstantInterval uses a human-readable toString()`() {
+        val interval = instantInterval("2018-02-01T12:43:59.999", "2019-03-04T17:39:51.888", ZoneId.of("UTC"))
+
+        assertEquals("InstantInterval(begin=2018-02-01T12:43:59.999Z,end=2019-03-04T17:39:51.888Z)", interval.toString())
+    }
+
+    @Test
     fun `Infiniy contains the year 2018 UTC`() {
         val infinity = Infinity.INSTANT_INTERVAL
 

@@ -1,9 +1,21 @@
 package net.thimmwork.time.interval
 
+import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
 import java.time.OffsetDateTime
 
-data class OffsetDateTimeInterval(val start: OffsetDateTime, val end: OffsetDateTime) {
+class OffsetDateTimeInterval(
+        start: OffsetDateTime,
+        end: OffsetDateTime
+) {
+    val interval: Range<OffsetDateTime>
+
+    init {
+        interval = Range.closedOpen(start, end)
+    }
+
+    val start get() = interval.lowerEndpoint()
+    val end get() = interval.upperEndpoint()
 
     fun normalize(): OffsetDateTimeInterval {
         val minInstant = Infinity.INSTANT_INTERVAL.start
@@ -20,4 +32,19 @@ data class OffsetDateTimeInterval(val start: OffsetDateTime, val end: OffsetDate
     }
 
     fun toInstantInterval() = InstantInterval(start.toInstant(), end.toInstant())
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as OffsetDateTimeInterval
+
+        if (interval != other.interval) return false
+
+        return true
+    }
+
+    override fun hashCode() = interval.hashCode()
+
+    override fun toString() = "OffsetDateTimeInterval(interval=$interval)"
 }
