@@ -19,12 +19,12 @@ package net.thimmwork.time.interval
 import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
 import java.time.LocalDate
+import java.util.*
 
 class LocalDateInterval(
         start: LocalDate = Infinity.MIN_DATE,
         end: LocalDate = Infinity.MAX_DATE
-) : AbstractInterval<LocalDate>(Range.closed(start, end)) {
-
+) : AbstractInterval<LocalDate>(Range.closed(start, end)), Iterable<LocalDate> {
     fun normalize(): LocalDateInterval {
         val minDate = Infinity.LOCAL_DATE_INTERVAL.start
         val maxDate = Infinity.LOCAL_DATE_INTERVAL.end
@@ -42,8 +42,26 @@ class LocalDateInterval(
     fun contains(other: LocalDateInterval) : Boolean {
         return !this.start.isAfter(other.start) && !this.end.isBefore(other.end)
     }
+
+    override fun iterator() : Iterator<LocalDate> = SimpleLocalDateIterator()
+
+    private inner class SimpleLocalDateIterator : Iterator<LocalDate> {
+        protected var next: LocalDate = start
+
+        override fun hasNext() = !next.isAfter(end)
+
+        override fun next(): LocalDate {
+            if (hasNext()) {
+                return next.also {
+                    next = it.plusDays(1)
+                }
+            }
+            throw NoSuchElementException()
+        }
+    }
 }
 
 fun localDateInterval(dateStart: String, dateEnd: String): LocalDateInterval {
     return LocalDateInterval(LocalDate.parse(dateStart), LocalDate.parse(dateEnd))
 }
+
