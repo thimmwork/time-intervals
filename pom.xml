@@ -12,6 +12,7 @@
     <name>Time Intervals</name>
     <description>datatypes for intervals of Java.time classes</description>
     <url>https://github.com/thimmwork/time-intervals</url>
+    <inceptionYear>2013</inceptionYear>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -92,6 +93,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <scm>
+        <connection>scm:git:git://github.com/thimmwork/time-intervals.git</connection>
+        <developerConnection>scm:git:git://github.com/thimmwork/time-intervals.git</developerConnection>
+        <url>https://github.com/thimmwork/time-intervals/tree/master</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Marcel Thimm</name>
+            <email>developer@thimmwork.net</email>
+            <organizationUrl>https://github.com/thimmwork</organizationUrl>
+        </developer>
+    </developers>
 
     <licenses>
         <license>
