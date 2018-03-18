@@ -9,11 +9,17 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Time Intervals</name>
+    <description>datatypes for intervals of Java.time classes</description>
+    <url>https://github.com/thimmwork/time-intervals</url>
+
     <properties>
-        <kotlin.version>1.2.30</kotlin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <guava.version>23.4-jre</guava.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <guava.version>24.1-jre</guava.version>
+        <kotlin.version>1.2.30</kotlin.version>
     </properties>
 
     <modules>
@@ -83,9 +89,6 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
