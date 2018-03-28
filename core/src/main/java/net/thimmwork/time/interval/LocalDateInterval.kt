@@ -24,7 +24,11 @@ import java.util.*
 class LocalDateInterval(
         start: LocalDate = Infinity.MIN_DATE,
         end: LocalDate = Infinity.MAX_DATE
-) : AbstractInterval<LocalDate>(Range.closed(start, end)), Iterable<LocalDate> {
+) : AbstractInterval<LocalDate>(Range.closed(start, end)), Iterable<LocalDate>, ClosedRange<LocalDate> {
+    override val endInclusive get() = interval.upperEndpoint()
+
+    override fun contains(value: LocalDate) = super<AbstractInterval>.contains(value)
+
     fun normalize(): LocalDateInterval {
         val minDate = Infinity.LOCAL_DATE_INTERVAL.start
         val maxDate = Infinity.LOCAL_DATE_INTERVAL.end
@@ -43,23 +47,52 @@ class LocalDateInterval(
         return !this.start.isAfter(other.start) && !this.end.isBefore(other.end)
     }
 
-    override fun iterator() : Iterator<LocalDate> = SimpleLocalDateIterator()
+    override fun iterator() : Iterator<LocalDate> = ForwardLocalDateIterator()
 
-    private inner class SimpleLocalDateIterator : Iterator<LocalDate> {
-        protected var next: LocalDate = start
+    infix fun step(step: Long) : Iterable<LocalDate> {
+        if (step > 0) {
+            return Iterable { ForwardLocalDateIterator(step) }
+        } else {
+            return Iterable { ReverseLocalDateIterator(step) }
+        }
+    }
+
+    private inner class ReverseLocalDateIterator(
+            private val step: Long
+    ) : Iterator<LocalDate> {
+        private var next = end
+
+        override fun hasNext() = !next.isBefore(start)
+
+        override fun next(): LocalDate {
+            if (hasNext()) {
+                return next.also {
+                    next = next.plusDays(step)
+                }
+            }
+            throw NoSuchElementException()
+        }
+    }
+
+    private inner class ForwardLocalDateIterator(
+            private val step: Long = 1
+    ) : Iterator<LocalDate> {
+        protected var next = start
 
         override fun hasNext() = !next.isAfter(end)
 
         override fun next(): LocalDate {
             if (hasNext()) {
                 return next.also {
-                    next = it.plusDays(1)
+                    next = next.plusDays(step)
                 }
             }
             throw NoSuchElementException()
         }
     }
 }
+
+operator fun LocalDate.rangeTo(other: LocalDate) = LocalDateInterval(this, other)
 
 fun localDateInterval(dateStart: String, dateEnd: String): LocalDateInterval {
     return LocalDateInterval(LocalDate.parse(dateStart), LocalDate.parse(dateEnd))

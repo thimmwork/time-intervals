@@ -38,7 +38,7 @@ open class AbstractInterval<T>(protected val interval: Range<T>) where T : Tempo
         return this.start.compareTo(other.start) <= 0 && this.end.compareTo(other.end) >= 0
     }
 
-    fun contains(other: T) = interval.contains(other)
+    open fun contains(value: T) = interval.contains(value)
 
     override fun hashCode() = interval.hashCode()
     override fun toString() = "Interval(start=$start,end=$end)"
