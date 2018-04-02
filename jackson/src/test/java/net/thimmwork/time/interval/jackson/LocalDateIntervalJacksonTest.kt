@@ -34,7 +34,12 @@ class LocalDateIntervalJacksonTest {
 
     @Test
     fun `deserialize JSON to LocalDateInterval`() {
-        val actualInterval = objectMapper.readValue("{ \"start\": \"2018-01-01\", \"end\": \"2018-12-31\" }", LocalDateInterval::class.java)
+        val actualInterval = objectMapper.readValue(
+                "{" +
+                        " \"start\": \"2018-01-01\"," +
+                        " \"end\": \"2018-12-31\"" +
+                        "}",
+                LocalDateInterval::class.java)
 
         val expected = localDateInterval("2018-01-01", "2018-12-31")
         assertEquals(expected, actualInterval)

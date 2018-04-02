@@ -35,7 +35,12 @@ class InstantIntervalJacksonTest {
 
     @Test
     fun `deserialize JSON to InstantInterval`() {
-        val actualInterval = objectMapper.readValue("{ \"start\": \"2018-01-01T00:00:00Z\", \"end\": \"2019-01-01T00:00:00Z\" }", InstantInterval::class.java)
+        val actualInterval = objectMapper.readValue(
+                "{" +
+                        " \"start\": \"2018-01-01T00:00:00Z\"," +
+                        " \"end\": \"2019-01-01T00:00:00Z\" " +
+                        "}",
+                InstantInterval::class.java)
 
         val expected = instantInterval("2018-01-01T00:00", "2019-01-01T00:00", ZoneId.of("UTC"))
         assertEquals(expected, actualInterval)
