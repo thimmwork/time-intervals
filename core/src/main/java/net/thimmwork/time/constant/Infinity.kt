@@ -22,6 +22,9 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
 
+/**
+ * This object contains constants for infinity
+ */
 object Infinity {
     @JvmStatic val MIN_DATE = LocalDate.of(1970, 1, 1);
     @JvmStatic val MAX_DATE = LocalDate.of(4000, 12, 31);

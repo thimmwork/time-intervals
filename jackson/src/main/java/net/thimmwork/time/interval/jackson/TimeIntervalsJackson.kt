@@ -25,6 +25,9 @@ import com.google.common.collect.ImmutableMap
 import net.thimmwork.time.interval.InstantInterval
 import net.thimmwork.time.interval.LocalDateInterval
 
+/**
+ * register this module with a jackson ObjectMapper to enable interval de/serialization
+ */
 val MODULE = SimpleModule(
         "time-intervals-jackson",
         Version(1, 0, 0, "RELEASE", "net.thimmwork.time", "intervals-jackson"),
