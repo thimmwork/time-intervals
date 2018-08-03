@@ -98,3 +98,7 @@ fun localDateInterval(dateStart: String, dateEnd: String): LocalDateInterval {
     return LocalDateInterval(LocalDate.parse(dateStart), LocalDate.parse(dateEnd))
 }
 
+infix fun LocalDate.downTo(start: LocalDate): Iterable<LocalDate> {
+    return LocalDateInterval(start, this).step(-1)
+}
+

@@ -101,6 +101,26 @@ class SimpleLocalDateIteratorTest {
     }
 
     @Test
+    fun `downTo can be used to iterate from end to start`() {
+
+        val resultListReverse = ArrayList<LocalDate>(7)
+
+        val start = parse("2018-03-11")
+        val end = parse("2018-03-17")
+        for (date in end downTo start) {
+            resultListReverse.add(date)
+        }
+        assertEquals(resultListReverse, listOf(
+                parse("2018-03-17"),
+                parse("2018-03-16"),
+                parse("2018-03-15"),
+                parse("2018-03-14"),
+                parse("2018-03-13"),
+                parse("2018-03-12"),
+                parse("2018-03-11")))
+    }
+
+    @Test
     fun `an interval with same start and end day iterates only over exactly that day`() {
         val interval = LocalDateInterval(parse("2018-03-18"), parse("2018-03-18"))
 
