@@ -19,6 +19,7 @@ package net.thimmwork.time.interval
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.LocalDate.parse
+import kotlin.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -56,6 +57,20 @@ class LocalDateIntervalTest {
         assertTrue { interval2018.contains(parse("2018-01-01")) }
         assertTrue { interval2018.contains(parse("2018-12-31")) }
         assertFalse { interval2018.contains(parse("2019-01-01")) }
+    }
+
+    @Test
+    fun `LocalDateInterval with start=end contains exactly that date`() {
+        val date = parse("2018-01-01")
+        val interval = LocalDateInterval(date, date)
+        assertTrue { interval.contains(date) }
+        assertFalse { interval.contains(date.minusDays(1)) }
+        assertFalse { interval.contains(date.plusDays(1)) }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `attempt to create interval with end before start will throw IllegalArgumentException`() {
+        localDateInterval("2018-12-31", "2018-01-01")
     }
 
 }
