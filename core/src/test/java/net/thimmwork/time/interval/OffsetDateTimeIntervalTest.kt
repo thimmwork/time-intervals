@@ -20,7 +20,6 @@ import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.OffsetDateTime
 import java.time.OffsetDateTime.parse
-import java.time.ZoneId
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -59,4 +58,18 @@ class OffsetDateTimeIntervalTest {
         assertTrue { year2018withCEToffset.contains(parse("2018-12-31T23:59:59.999+01:00")) }
         assertFalse { year2018withCEToffset.contains(parse("2019-01-01T00:00:00.000+01:00")) }
     }
+
+    @Test
+    fun `zero-length OffsetDateTimeInterval with start=end does not contain start`() {
+        val dateTime = OffsetDateTime.parse("2018-01-01T00:00:00.000+01:00")
+        val interval = OffsetDateTimeInterval(dateTime, dateTime)
+        assertFalse { interval.contains(dateTime.minusSeconds(1)) }
+        assertFalse { interval.contains(dateTime) }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `attempt to create interval with end before start will throw IllegalArgumentException`() {
+        OffsetDateTimeInterval(parse("2018-12-31T00:00:00.000+01:00"), parse("2018-01-01T00:00:00.000+01:00"))
+    }
+
 }
