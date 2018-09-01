@@ -1,6 +1,8 @@
 ## Time Intervals ##
 This library provides data types for intervals of java.time classes.
 
+[![Build Status](https://travis-ci.org/thimmwork/time-intervals.svg?branch=master)](https://travis-ci.org/thimmwork/time-intervals)
+
 ### Conventions
 LocalDateIntervals are closed, which means that the year 2018 is represented by a LocalDateInterval starting on 2018-01-01 and ending on 2018-12-31.
 
