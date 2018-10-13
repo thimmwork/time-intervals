@@ -16,6 +16,7 @@
 
 package net.thimmwork.time.interval
 
+import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.OffsetDateTime
@@ -72,4 +73,14 @@ class OffsetDateTimeIntervalTest {
         OffsetDateTimeInterval(parse("2018-12-31T00:00:00.000+01:00"), parse("2018-01-01T00:00:00.000+01:00"))
     }
 
+    @Test
+    fun `conversion to range creates a closed-open range`() {
+        val range2018 = year2018withCEToffset.toRange()
+        assertTrue { range2018.hasLowerBound() }
+        assertTrue { range2018.lowerBoundType() == BoundType.CLOSED }
+        assertTrue { range2018.lowerEndpoint() == year2018withCEToffset.start }
+        assertTrue { range2018.hasUpperBound() }
+        assertTrue { range2018.upperBoundType() == BoundType.OPEN }
+        assertTrue { range2018.upperEndpoint() == year2018withCEToffset.end }
+    }
 }

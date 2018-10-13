@@ -42,4 +42,6 @@ open class AbstractInterval<T>(protected val interval: Range<T>) where T : Tempo
 
     override fun hashCode() = interval.hashCode()
     override fun toString() = "Interval(start=$start,end=$end)"
+
+    fun toRange() = interval
 }

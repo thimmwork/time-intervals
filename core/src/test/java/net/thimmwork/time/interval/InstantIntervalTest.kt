@@ -16,6 +16,7 @@
 
 package net.thimmwork.time.interval
 
+import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.OffsetDateTime
@@ -75,5 +76,16 @@ class InstantIntervalTest {
         assertTrue { interval2018utc.contains(OffsetDateTime.parse("2018-01-01T00:00:00.000Z").toInstant()) }
         assertTrue { interval2018utc.contains(OffsetDateTime.parse("2018-12-31T23:59:59.999Z").toInstant()) }
         assertFalse { interval2018utc.contains(OffsetDateTime.parse("2019-01-01T00:00:00.000Z").toInstant()) }
+    }
+
+    @Test
+    fun `conversion to range creates a closed-open range`() {
+        val range2018 = interval2018utc.toRange()
+        assertTrue { range2018.hasLowerBound() }
+        assertTrue { range2018.lowerBoundType() == BoundType.CLOSED }
+        assertTrue { range2018.lowerEndpoint() == parse("2018-01-01T00:00Z").toInstant() }
+        assertTrue { range2018.hasUpperBound() }
+        assertTrue { range2018.upperBoundType() == BoundType.OPEN }
+        assertTrue { range2018.upperEndpoint() == parse("2019-01-01T00:00Z").toInstant() }
     }
 }

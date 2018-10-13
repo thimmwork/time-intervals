@@ -16,10 +16,10 @@
 
 package net.thimmwork.time.interval
 
+import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
 import java.time.LocalDate.parse
-import kotlin.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -73,4 +73,14 @@ class LocalDateIntervalTest {
         localDateInterval("2018-12-31", "2018-01-01")
     }
 
+    @Test
+    fun `conversion to range creates a closed range`() {
+        val range2018 = interval2018.toRange()
+        assertTrue { range2018.hasLowerBound() }
+        assertTrue { range2018.lowerBoundType() == BoundType.CLOSED }
+        assertTrue { range2018.lowerEndpoint() == parse("2018-01-01") }
+        assertTrue { range2018.hasUpperBound() }
+        assertTrue { range2018.upperBoundType() == BoundType.CLOSED }
+        assertTrue { range2018.upperEndpoint() == parse("2018-12-31") }
+    }
 }
