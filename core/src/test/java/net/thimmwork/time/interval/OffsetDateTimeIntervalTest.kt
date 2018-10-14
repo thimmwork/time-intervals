@@ -83,4 +83,21 @@ class OffsetDateTimeIntervalTest {
         assertTrue { range2018.upperBoundType() == BoundType.OPEN }
         assertTrue { range2018.upperEndpoint() == year2018withCEToffset.end }
     }
+
+    @Test
+    fun `two intervals with same bounds have the same hashCode`() {
+        val otherInterval = OffsetDateTimeInterval(year2018withCEToffset.start, year2018withCEToffset.end)
+
+        assertTrue { year2018withCEToffset.hashCode() == otherInterval.hashCode() }
+    }
+
+    @Test
+    fun `two intervals with same bounds are equal`() {
+        val otherInterval = OffsetDateTimeInterval(year2018withCEToffset.start, year2018withCEToffset.end)
+        val differentInterval = OffsetDateTimeInterval(year2018withCEToffset.start, year2018withCEToffset.end.plusSeconds(1))
+
+        assertTrue { year2018withCEToffset == otherInterval }
+        assertFalse { year2018withCEToffset == differentInterval }
+        assertFalse { otherInterval == differentInterval }
+    }
 }

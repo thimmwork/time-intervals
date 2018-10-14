@@ -83,4 +83,21 @@ class LocalDateIntervalTest {
         assertTrue { range2018.upperBoundType() == BoundType.CLOSED }
         assertTrue { range2018.upperEndpoint() == parse("2018-12-31") }
     }
+
+    @Test
+    fun `two intervals with same bounds have the same hashCode`() {
+        val otherInterval = LocalDateInterval(interval2018.start, interval2018.end)
+
+        assertTrue { interval2018.hashCode() == otherInterval.hashCode() }
+    }
+
+    @Test
+    fun `two intervals with same bounds are equal`() {
+        val otherInterval = LocalDateInterval(interval2018.start, interval2018.end)
+        val differentInterval = LocalDateInterval(interval2018.start, interval2018.end.plusDays(1))
+
+        assertTrue { interval2018 == otherInterval }
+        assertFalse { interval2018 == differentInterval }
+        assertFalse { otherInterval == differentInterval }
+    }
 }

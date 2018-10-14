@@ -88,4 +88,21 @@ class InstantIntervalTest {
         assertTrue { range2018.upperBoundType() == BoundType.OPEN }
         assertTrue { range2018.upperEndpoint() == parse("2019-01-01T00:00Z").toInstant() }
     }
+
+    @Test
+    fun `two intervals with same bounds have the same hashCode`() {
+        val otherInterval = InstantInterval(interval2018utc.start, interval2018utc.end)
+
+        assertTrue { interval2018utc.hashCode() == otherInterval.hashCode() }
+    }
+
+    @Test
+    fun `two intervals with same bounds are equal`() {
+        val otherInterval = InstantInterval(interval2018utc.start, interval2018utc.end)
+        val differentInterval = InstantInterval(interval2018utc.start, interval2018utc.end.plusMillis(1))
+
+        assertTrue { interval2018utc == otherInterval }
+        assertFalse { interval2018utc == differentInterval }
+        assertFalse { otherInterval == differentInterval }
+    }
 }
