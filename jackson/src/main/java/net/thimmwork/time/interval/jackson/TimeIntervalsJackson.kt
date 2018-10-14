@@ -24,6 +24,8 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import net.thimmwork.time.interval.InstantInterval
 import net.thimmwork.time.interval.LocalDateInterval
+import net.thimmwork.time.interval.LocalDateTimeInterval
+import net.thimmwork.time.interval.OffsetDateTimeInterval
 
 /**
  * register this module with a jackson ObjectMapper to enable interval de/serialization
@@ -33,9 +35,13 @@ val MODULE = SimpleModule(
         Version(1, 0, 0, "RELEASE", "net.thimmwork.time", "intervals-jackson"),
         ImmutableMap.of<Class<*>, JsonDeserializer<*>>(
                 InstantInterval::class.java, InstantIntervalDeserializer(),
-                LocalDateInterval::class.java, LocalDateIntervalDeserializer()
+                LocalDateInterval::class.java, LocalDateIntervalDeserializer(),
+                LocalDateTimeInterval::class.java, LocalDateTimeIntervalDeserializer(),
+                OffsetDateTimeInterval::class.java, OffsetDateTimeIntervalDeserializer()
         ),
         ImmutableList.of<JsonSerializer<*>>(
                 InstantIntervalSerializer(),
-                LocalDateIntervalSerializer()
+                LocalDateIntervalSerializer(),
+                LocalDateTimeIntervalSerializer(),
+                OffsetDateTimeIntervalSerializer()
         ))
