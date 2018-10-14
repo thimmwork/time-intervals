@@ -37,7 +37,7 @@ class OffsetDateTimeIntervalTest {
 
     @Test
     fun `the 20th century is normalized to 1970-2000`() {
-        val twentiethCentury = OffsetDateTimeInterval(parse("1900-01-01T00:00:00+01:00"), parse("1999-12-31T00:00:00+01:00"))
+        val twentiethCentury = OffsetDateTimeInterval(parse("1900-01-01T00:00:00+01:00"), parse("2000-01-01T00:00:00+01:00"))
         val normalized = twentiethCentury.normalize()
 
         val expected = OffsetDateTimeInterval(parse("1970-01-01T01:00:00+01:00"), twentiethCentury.end)
@@ -45,7 +45,7 @@ class OffsetDateTimeIntervalTest {
     }
 
     @Test
-    fun `an interval up to year 10k is normalized to dec 31th 4000`() {
+    fun `an interval up to year 5k is normalized to dec 31th 4000`() {
         val hugeInterval = OffsetDateTimeInterval(parse("2000-01-01T00:00:00+01:00"), parse("5000-01-01T00:00:00+01:00"))
         val normalized = hugeInterval.normalize()
 

@@ -44,7 +44,7 @@ class LocalDateIntervalTest {
     }
 
     @Test
-    fun `an interval up to year 10k is normalized to dec 31th 4000`() {
+    fun `an interval up to year 5k is normalized to dec 31th 4000`() {
         val hugeInterval = LocalDateInterval(parse("2000-01-01"), parse("5000-01-01"))
         val normalized = hugeInterval.normalize()
 
