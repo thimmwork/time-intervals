@@ -18,9 +18,7 @@ package net.thimmwork.time.interval
 
 import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
 
 class LocalDateTimeInterval(
         start: LocalDateTime = Infinity.MIN_DATE_TIME,
@@ -59,6 +57,12 @@ class LocalDateTimeInterval(
     override fun hashCode() = interval.hashCode()
 
     override fun toString() = "LocalDateTimeInterval(interval=$interval)"
+
+    companion object {
+        fun parse(start: String, end: String) : LocalDateTimeInterval {
+            return LocalDateTimeInterval(LocalDateTime.parse(start), LocalDateTime.parse(end))
+        }
+    }
 }
 
 operator fun LocalDateTime.rangeTo(other: LocalDateTime) = LocalDateTimeInterval(this, other)

@@ -19,13 +19,13 @@ package net.thimmwork.time.interval
 import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
 import org.junit.Test
-import java.time.LocalDate.parse
+import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class LocalDateIntervalTest {
-    private val interval2018 = localDateInterval("2018-01-01", "2018-12-31")
+    private val interval2018 = LocalDateInterval.parse("2018-01-01", "2018-12-31")
 
     @Test
     fun `Infiniy contains the year 2018`() {
@@ -36,32 +36,32 @@ class LocalDateIntervalTest {
 
     @Test
     fun `the 20th century is normalized to 1970-2000`() {
-        val twentiethCentury = LocalDateInterval(parse("1900-01-01"), parse("1999-12-31"))
+        val twentiethCentury = LocalDateInterval.parse("1900-01-01", "1999-12-31")
         val normalized = twentiethCentury.normalize()
 
-        val expected = LocalDateInterval(parse("1970-01-01"), twentiethCentury.end)
+        val expected = LocalDateInterval(LocalDate.parse("1970-01-01"), twentiethCentury.end)
         assertEquals(expected, normalized)
     }
 
     @Test
     fun `an interval up to year 5k is normalized to dec 31th 4000`() {
-        val hugeInterval = LocalDateInterval(parse("2000-01-01"), parse("5000-01-01"))
+        val hugeInterval = LocalDateInterval.parse("2000-01-01", "5000-01-01")
         val normalized = hugeInterval.normalize()
 
-        val expected = LocalDateInterval(hugeInterval.start, parse("4000-12-31"))
+        val expected = LocalDateInterval(hugeInterval.start, LocalDate.parse("4000-12-31"))
         assertEquals(expected, normalized)
     }
 
     @Test
     fun `2018 contains first and last day of the year, but not first day of 2019`() {
-        assertTrue { interval2018.contains(parse("2018-01-01")) }
-        assertTrue { interval2018.contains(parse("2018-12-31")) }
-        assertFalse { interval2018.contains(parse("2019-01-01")) }
+        assertTrue { interval2018.contains(LocalDate.parse("2018-01-01")) }
+        assertTrue { interval2018.contains(LocalDate.parse("2018-12-31")) }
+        assertFalse { interval2018.contains(LocalDate.parse("2019-01-01")) }
     }
 
     @Test
     fun `LocalDateInterval with start=end contains exactly that date`() {
-        val date = parse("2018-01-01")
+        val date = LocalDate.parse("2018-01-01")
         val interval = LocalDateInterval(date, date)
         assertTrue { interval.contains(date) }
         assertFalse { interval.contains(date.minusDays(1)) }
@@ -70,7 +70,7 @@ class LocalDateIntervalTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun `attempt to create interval with end before start will throw IllegalArgumentException`() {
-        localDateInterval("2018-12-31", "2018-01-01")
+        LocalDateInterval.parse("2018-12-31", "2018-01-01")
     }
 
     @Test
@@ -78,10 +78,10 @@ class LocalDateIntervalTest {
         val range2018 = interval2018.toRange()
         assertTrue { range2018.hasLowerBound() }
         assertTrue { range2018.lowerBoundType() == BoundType.CLOSED }
-        assertTrue { range2018.lowerEndpoint() == parse("2018-01-01") }
+        assertTrue { range2018.lowerEndpoint() == LocalDate.parse("2018-01-01") }
         assertTrue { range2018.hasUpperBound() }
         assertTrue { range2018.upperBoundType() == BoundType.CLOSED }
-        assertTrue { range2018.upperEndpoint() == parse("2018-12-31") }
+        assertTrue { range2018.upperEndpoint() == LocalDate.parse("2018-12-31") }
     }
 
     @Test
@@ -99,5 +99,15 @@ class LocalDateIntervalTest {
         assertTrue { interval2018 == otherInterval }
         assertFalse { interval2018 == differentInterval }
         assertFalse { otherInterval == differentInterval }
+    }
+
+    @Test
+    fun parse() {
+        val begin = "2018-02-01"
+        val end = "2019-05-06"
+        val interval = LocalDateInterval(LocalDate.parse(begin), LocalDate.parse(end))
+        val interval2 = LocalDateInterval.parse(begin, end)
+
+        assertTrue { interval == interval2 }
     }
 }

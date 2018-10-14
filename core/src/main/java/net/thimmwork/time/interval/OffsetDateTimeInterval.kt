@@ -39,6 +39,10 @@ class OffsetDateTimeInterval(
         return OffsetDateTimeInterval(start.atOffset(this.start.getOffset()), end.atOffset(this.end.getOffset()))
     }
 
+    fun toLocalDateTimeInterval() : LocalDateTimeInterval {
+        return LocalDateTimeInterval(start.toLocalDateTime(), end.toLocalDateTime())
+    }
+
     fun toInstantInterval() = InstantInterval(start.toInstant(), end.toInstant())
 
     override fun equals(other: Any?): Boolean {
@@ -55,4 +59,10 @@ class OffsetDateTimeInterval(
     override fun hashCode() = interval.hashCode()
 
     override fun toString() = "OffsetDateTimeInterval(interval=$interval)"
+
+    companion object {
+        fun parse(start: String, end: String) : OffsetDateTimeInterval {
+            return OffsetDateTimeInterval(OffsetDateTime.parse(start), OffsetDateTime.parse(end))
+        }
+    }
 }

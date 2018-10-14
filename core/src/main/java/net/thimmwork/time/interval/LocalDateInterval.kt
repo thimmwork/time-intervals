@@ -105,13 +105,15 @@ class LocalDateInterval(
     override fun hashCode() = interval.hashCode()
 
     override fun toString() = "LocalDateInterval(interval=$interval)"
+
+    companion object {
+        fun parse(start: String, end: String) : LocalDateInterval {
+            return LocalDateInterval(LocalDate.parse(start), LocalDate.parse(end))
+        }
+    }
 }
 
 operator fun LocalDate.rangeTo(other: LocalDate) = LocalDateInterval(this, other)
-
-fun localDateInterval(dateStart: String, dateEnd: String): LocalDateInterval {
-    return LocalDateInterval(LocalDate.parse(dateStart), LocalDate.parse(dateEnd))
-}
 
 infix fun LocalDate.downTo(start: LocalDate): Iterable<LocalDate> {
     return LocalDateInterval(start, this).step(-1)

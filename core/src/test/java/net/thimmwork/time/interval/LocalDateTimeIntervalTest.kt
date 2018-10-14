@@ -100,4 +100,14 @@ class LocalDateTimeIntervalTest {
         assertFalse { year2018 == differentInterval }
         assertFalse { otherInterval == differentInterval }
     }
+
+    @Test
+    fun parse() {
+        val begin = "2018-02-01T03:04:05"
+        val end = "2019-05-06T07:08:09"
+        val interval = LocalDateTimeInterval(LocalDateTime.parse(begin), LocalDateTime.parse(end))
+        val interval2 = LocalDateTimeInterval.parse(begin, end)
+
+        assertTrue { interval == interval2 }
+    }
 }

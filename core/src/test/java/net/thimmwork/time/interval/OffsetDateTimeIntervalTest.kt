@@ -100,4 +100,14 @@ class OffsetDateTimeIntervalTest {
         assertFalse { year2018withCEToffset == differentInterval }
         assertFalse { otherInterval == differentInterval }
     }
+
+    @Test
+    fun parse() {
+        val begin = "2018-02-01T03:04:05+06:30"
+        val end = "2019-05-06T07:08:09+10:45"
+        val interval = OffsetDateTimeInterval(OffsetDateTime.parse(begin), parse(end))
+        val interval2 = OffsetDateTimeInterval.parse(begin, end)
+
+        assertTrue { interval == interval2 }
+    }
 }
