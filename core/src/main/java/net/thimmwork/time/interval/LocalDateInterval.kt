@@ -91,6 +91,10 @@ class LocalDateInterval(
         }
     }
 
+    override infix fun overlaps(other: AbstractInterval<LocalDate>) : Boolean {
+        return !(start > other.end || end < other.start)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

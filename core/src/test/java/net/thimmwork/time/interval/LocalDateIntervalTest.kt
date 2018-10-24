@@ -110,4 +110,117 @@ class LocalDateIntervalTest {
 
         assertTrue { interval == interval2 }
     }
+
+    class OverlapTests {
+        val t1 = LocalDate.parse("2000-01-01")
+        val t2 = LocalDate.parse("2000-02-01")
+        val t3 = LocalDate.parse("2000-03-01")
+        val t4 = LocalDate.parse("2000-04-01")
+
+        @Test
+        fun `case1 - x starts before y and overlaps`() {
+            val x = LocalDateInterval(t1, t3)
+            val y = LocalDateInterval(t2, t4)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case2 - y starts before x and overlaps`() {
+            val x = LocalDateInterval(t2, t4)
+            val y = LocalDateInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case3 - x and y touch at start of x`() {
+            val x = LocalDateInterval(t3, t4)
+            val y = LocalDateInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case4 - x and y touch at end of x`() {
+            val x = LocalDateInterval(t1, t2)
+            val y = LocalDateInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case5 - x starts after y and both have the same end`() {
+            val x = LocalDateInterval(t2, t3)
+            val y = LocalDateInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case6 - x ends before y and both have the same start`() {
+            val x = LocalDateInterval(t1, t2)
+            val y = LocalDateInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case7 - x ends after y and both have the same start`() {
+            val x = LocalDateInterval(t1, t3)
+            val y = LocalDateInterval(t1, t2)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case8 - x starts before y and both have the same end`() {
+            val x = LocalDateInterval(t1, t3)
+            val y = LocalDateInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case9 - x contains y`() {
+            val x = LocalDateInterval(t1, t4)
+            val y = LocalDateInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case10 - y contains x`() {
+            val x = LocalDateInterval(t2, t3)
+            val y = LocalDateInterval(t1, t4)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case11 - x is after y`() {
+            val x = LocalDateInterval(t3, t4)
+            val y = LocalDateInterval(t1, t2)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case12 - y is after x`() {
+            val x = LocalDateInterval(t1, t2)
+            val y = LocalDateInterval(t3, t4)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case13 - x equals y`() {
+            val x = LocalDateInterval(t1, t2)
+            val y = LocalDateInterval(t1, t2)
+
+            assertTrue { x overlaps y }
+        }
+
+    }
+
 }

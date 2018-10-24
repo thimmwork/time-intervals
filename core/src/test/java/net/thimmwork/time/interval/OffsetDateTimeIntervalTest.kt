@@ -110,4 +110,115 @@ class OffsetDateTimeIntervalTest {
 
         assertTrue { interval == interval2 }
     }
+
+    class OverlapTests {
+        val t1 = OffsetDateTime.parse("2000-01-01T00:00:00Z")
+        val t2 = OffsetDateTime.parse("2000-02-01T00:00:00Z")
+        val t3 = OffsetDateTime.parse("2000-03-01T00:00:00Z")
+        val t4 = OffsetDateTime.parse("2000-04-01T00:00:00Z")
+
+        @Test
+        fun `case1 - x starts before y and overlaps`() {
+            val x = OffsetDateTimeInterval(t1, t3)
+            val y = OffsetDateTimeInterval(t2, t4)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case2 - y starts before x and overlaps`() {
+            val x = OffsetDateTimeInterval(t2, t4)
+            val y = OffsetDateTimeInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case3 - x and y touch at start of x`() {
+            val x = OffsetDateTimeInterval(t3, t4)
+            val y = OffsetDateTimeInterval(t2, t3)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case4 - x and y touch at end of x`() {
+            val x = OffsetDateTimeInterval(t1, t2)
+            val y = OffsetDateTimeInterval(t2, t3)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case5 - x starts after y and both have the same end`() {
+            val x = OffsetDateTimeInterval(t2, t3)
+            val y = OffsetDateTimeInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case6 - x ends before y and both have the same start`() {
+            val x = OffsetDateTimeInterval(t1, t2)
+            val y = OffsetDateTimeInterval(t1, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case7 - x ends after y and both have the same start`() {
+            val x = OffsetDateTimeInterval(t1, t3)
+            val y = OffsetDateTimeInterval(t1, t2)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case8 - x starts before y and both have the same end`() {
+            val x = OffsetDateTimeInterval(t1, t3)
+            val y = OffsetDateTimeInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case9 - x contains y`() {
+            val x = OffsetDateTimeInterval(t1, t4)
+            val y = OffsetDateTimeInterval(t2, t3)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case10 - y contains x`() {
+            val x = OffsetDateTimeInterval(t2, t3)
+            val y = OffsetDateTimeInterval(t1, t4)
+
+            assertTrue { x overlaps y }
+        }
+
+        @Test
+        fun `case11 - x is after y`() {
+            val x = OffsetDateTimeInterval(t3, t4)
+            val y = OffsetDateTimeInterval(t1, t2)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case12 - y is after x`() {
+            val x = OffsetDateTimeInterval(t1, t2)
+            val y = OffsetDateTimeInterval(t3, t4)
+
+            assertFalse { x overlaps y }
+        }
+
+        @Test
+        fun `case13 - x equals y`() {
+            val x = OffsetDateTimeInterval(t1, t2)
+            val y = OffsetDateTimeInterval(t1, t2)
+
+            assertTrue { x overlaps y }
+        }
+    }
 }
