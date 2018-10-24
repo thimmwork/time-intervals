@@ -44,7 +44,7 @@ class OffsetDateTimeIntervalMap<T> {
     fun clear() = delegate.clear()
 
     fun put(key: OffsetDateTimeInterval, value: T) {
-        delegate.put(key.toRange(), value)
+        delegate.putCoalescing(key.toRange(), value)
     }
 
     fun putAll(from: OffsetDateTimeIntervalMap<T>) {
@@ -54,4 +54,6 @@ class OffsetDateTimeIntervalMap<T> {
     fun remove(key: OffsetDateTimeInterval) {
         delegate.remove(key.toRange())
     }
+
+    fun size() = delegate.asMapOfRanges().size
 }

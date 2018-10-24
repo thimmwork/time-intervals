@@ -117,4 +117,13 @@ class OffsetDateTimeIntervalMapTest {
         assertTrue { mapOfLocalDateIntervals[firstHalf2018] == 2}
         assertTrue { mapOfLocalDateIntervals[secondHalf2018] == 1}
     }
+
+    @Test
+    fun size() {
+        val map = OffsetDateTimeIntervalMap<Int>()
+        map.put(firstHalf2018, 1)
+        map.put(secondHalf2018, 1)
+
+        assertTrue { map.size() == 1 }
+    }
 }
