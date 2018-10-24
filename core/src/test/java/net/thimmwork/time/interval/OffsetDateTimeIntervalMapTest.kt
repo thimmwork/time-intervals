@@ -18,6 +18,7 @@ package net.thimmwork.time.interval
 
 import net.thimmwork.time.interval.OffsetDateTimeInterval.Companion.parse
 import org.junit.Test
+import java.time.OffsetDateTime
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -125,5 +126,23 @@ class OffsetDateTimeIntervalMapTest {
         map.put(secondHalf2018, 1)
 
         assertTrue { map.size() == 1 }
+    }
+
+    @Test
+    fun span() {
+        val map = OffsetDateTimeIntervalMap<Int>()
+        map.put(firstHalf2018, 1)
+
+        assertTrue { map.span() == firstHalf2018 }
+
+        val newStart = OffsetDateTime.parse("2000-01-17T23:49:03+05:00")
+        map.put(OffsetDateTimeInterval(newStart, OffsetDateTime.parse("2009-03-01T00:00:00Z")), 2)
+
+        assertTrue { map.span() == OffsetDateTimeInterval(newStart, firstHalf2018.end) }
+    }
+
+    @Test(expected = NoSuchElementException::class)
+    fun `span throws NoSuchElementException when empty`() {
+        OffsetDateTimeIntervalMap<Int>().span()
     }
 }

@@ -56,4 +56,6 @@ class OffsetDateTimeIntervalMap<T> {
     }
 
     fun size() = delegate.asMapOfRanges().size
+
+    fun span() = toOffsetDateTimeInterval(delegate.span())
 }
