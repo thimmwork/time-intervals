@@ -20,10 +20,9 @@ import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
 import java.time.OffsetDateTime
 
-class OffsetDateTimeInterval(
-        start: OffsetDateTime,
-        end: OffsetDateTime
-) : AbstractInterval<OffsetDateTime>(Range.closedOpen(start, end)) {
+class OffsetDateTimeInterval private constructor(range: Range<OffsetDateTime>) : AbstractInterval<OffsetDateTime>(range) {
+
+    constructor(start: OffsetDateTime, end: OffsetDateTime) : this(Range.closedOpen(start, end))
 
     fun normalize(): OffsetDateTimeInterval {
         val minInstant = Infinity.INSTANT_INTERVAL.start
@@ -44,6 +43,11 @@ class OffsetDateTimeInterval(
     }
 
     fun toInstantInterval() = InstantInterval(start.toInstant(), end.toInstant())
+
+    override infix fun overlap(other: AbstractInterval<OffsetDateTime>) : OffsetDateTimeInterval? {
+        val overlappingRange = overlappingRange(other)
+        return if (overlappingRange == null) null else OffsetDateTimeInterval(overlappingRange)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -19,7 +19,7 @@ package net.thimmwork.time.interval
 import com.google.common.collect.Range
 import java.time.temporal.Temporal
 
-open class AbstractInterval<T>(protected val interval: Range<T>) where T : Temporal, T: Comparable<T> {
+abstract class AbstractInterval<T>(protected val interval: Range<T>) where T : Temporal, T: Comparable<T> {
     val start get() = interval.lowerEndpoint()
     val end get() = interval.upperEndpoint()
 
@@ -40,6 +40,16 @@ open class AbstractInterval<T>(protected val interval: Range<T>) where T : Tempo
 
     open infix fun overlaps(other: AbstractInterval<T>) : Boolean {
         return start < other.end && end > other.start
+    }
+
+    abstract infix fun overlap(other: AbstractInterval<T>) : AbstractInterval<T>?
+
+    protected fun overlappingRange(other: AbstractInterval<T>): Range<T>? {
+        if (!interval.isConnected(other.interval)) {
+            return null
+        }
+        val intersection = interval.intersection(other.interval)
+        return if (intersection.isEmpty) null else intersection
     }
 
     open fun contains(value: T) = interval.contains(value)

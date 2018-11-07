@@ -20,10 +20,10 @@ import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
 import java.time.LocalDateTime
 
-class LocalDateTimeInterval(
-        start: LocalDateTime = Infinity.MIN_DATE_TIME,
-        end: LocalDateTime = Infinity.MAX_DATE_TIME
-) : AbstractInterval<LocalDateTime>(Range.closedOpen(start, end)) {
+class LocalDateTimeInterval private constructor(range: Range<LocalDateTime>) : AbstractInterval<LocalDateTime>(range) {
+
+    constructor(start: LocalDateTime = Infinity.MIN_DATE_TIME, end: LocalDateTime = Infinity.MAX_DATE_TIME)
+            : this(Range.closedOpen(start, end))
 
     fun normalize(): LocalDateTimeInterval {
         val minDate = Infinity.LOCAL_DATE_TIME_INTERVAL.start
@@ -41,6 +41,11 @@ class LocalDateTimeInterval(
 
     fun contains(other: LocalDateTimeInterval) : Boolean {
         return !this.start.isAfter(other.start) && !this.end.isBefore(other.end)
+    }
+
+    override fun overlap(other: AbstractInterval<LocalDateTime>): LocalDateTimeInterval? {
+        val overlappingRange = overlappingRange(other)
+        return if (overlappingRange == null) null else LocalDateTimeInterval(overlappingRange)
     }
 
     override fun equals(other: Any?): Boolean {

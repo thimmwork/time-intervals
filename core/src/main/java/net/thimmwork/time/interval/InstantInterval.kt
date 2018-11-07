@@ -22,10 +22,10 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class InstantInterval(
-        start: Instant = Infinity.INSTANT_INTERVAL.start,
-        end: Instant = Infinity.INSTANT_INTERVAL.end
-) : AbstractInterval<Instant>(Range.closedOpen(start, end)){
+class InstantInterval private constructor(range: Range<Instant>) : AbstractInterval<Instant>(range) {
+
+    constructor(start: Instant = Infinity.INSTANT_INTERVAL.start, end: Instant = Infinity.INSTANT_INTERVAL.end)
+            : this(Range.closedOpen(start, end))
 
     fun normalize(): InstantInterval {
         val minInstant = Infinity.INSTANT_INTERVAL.start
@@ -39,6 +39,11 @@ class InstantInterval(
         else
             end
         return InstantInterval(start, end)
+    }
+
+    override fun overlap(other: AbstractInterval<Instant>): InstantInterval? {
+        val overlappingRange = overlappingRange(other)
+        return if (overlappingRange == null) null else InstantInterval(overlappingRange)
     }
 
     override fun equals(other: Any?): Boolean {

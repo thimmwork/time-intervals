@@ -21,10 +21,11 @@ import net.thimmwork.time.constant.Infinity
 import java.time.LocalDate
 import java.util.*
 
-class LocalDateInterval(
-        start: LocalDate = Infinity.MIN_DATE,
-        end: LocalDate = Infinity.MAX_DATE
-) : AbstractInterval<LocalDate>(Range.closed(start, end)), Iterable<LocalDate>, ClosedRange<LocalDate> {
+class LocalDateInterval private constructor(range: Range<LocalDate>)
+    : AbstractInterval<LocalDate>(range), Iterable<LocalDate>, ClosedRange<LocalDate> {
+
+    constructor(start: LocalDate = Infinity.MIN_DATE, end: LocalDate = Infinity.MAX_DATE) : this(Range.closed(start, end))
+
     override val endInclusive get() = interval.upperEndpoint()
 
     override fun contains(value: LocalDate) = super<AbstractInterval>.contains(value)
@@ -93,6 +94,11 @@ class LocalDateInterval(
 
     override infix fun overlaps(other: AbstractInterval<LocalDate>) : Boolean {
         return !(start > other.end || end < other.start)
+    }
+
+    override fun overlap(other: AbstractInterval<LocalDate>): LocalDateInterval? {
+        val overlappingRange = overlappingRange(other)
+        return if (overlappingRange == null) null else LocalDateInterval(overlappingRange)
     }
 
     override fun equals(other: Any?): Boolean {
