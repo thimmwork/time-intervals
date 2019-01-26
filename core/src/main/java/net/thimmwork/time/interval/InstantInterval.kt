@@ -58,6 +58,12 @@ class InstantInterval private constructor(range: Range<Instant>) : AbstractInter
     }
 
     override fun hashCode() = interval.hashCode()
+
+    companion object {
+        fun parse(start: String, end: String) : InstantInterval {
+            return InstantInterval(Instant.parse(start), Instant.parse(end))
+        }
+    }
 }
 
 fun instantInterval(dateTimeStart: String, dateTimeEnd: String, zoneId: ZoneId): InstantInterval {
