@@ -101,6 +101,21 @@ class LocalDateIntervalTest {
         assertFalse { otherInterval == differentInterval }
     }
 
+    @Test(expected = java.lang.IllegalArgumentException::class)
+    fun `gap throws IllegalArgumentException on overlapping intervals`() {
+        val overlappingInterval2018_19 = LocalDateInterval.parse("2018-12-01", "2020-01-01")
+
+        interval2018.gap(overlappingInterval2018_19)
+    }
+
+    @Test
+    fun `gap returns gap on succeeding interval`() {
+        val jan2nd2019 = LocalDateInterval.parse("2019-01-02T00:00:00", "2019-01-02T00:00:00")
+
+        assertTrue { interval2018.gap(jan2nd2019) == LocalDateInterval.parse("2019-01-01", "2019-01-02") }
+    }
+
+
     @Test
     fun parse() {
         val begin = "2018-02-01"

@@ -44,6 +44,8 @@ abstract class AbstractInterval<T>(protected val interval: Range<T>) where T : T
 
     abstract infix fun overlap(other: AbstractInterval<T>) : AbstractInterval<T>?
 
+    abstract infix fun gap(value: AbstractInterval<T>) : AbstractInterval<T>?
+
     protected fun overlappingRange(other: AbstractInterval<T>): Range<T>? {
         if (!interval.isConnected(other.interval)) {
             return null

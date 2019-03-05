@@ -49,6 +49,8 @@ class OffsetDateTimeInterval private constructor(range: Range<OffsetDateTime>) :
         return if (overlappingRange == null) null else OffsetDateTimeInterval(overlappingRange)
     }
 
+    override fun gap(value: AbstractInterval<OffsetDateTime>) = OffsetDateTimeInterval(interval.gap(value.toRange()))
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
