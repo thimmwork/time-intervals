@@ -26,6 +26,8 @@ class LocalDateIntervalMap<T> {
 
     operator fun get(key: LocalDate) = delegate[key]
 
+    operator fun get(key: LocalDateInterval) : Collection<T> = delegate.subRangeMap(key.toRange()).asMapOfRanges().values
+
     fun isEmpty(): Boolean {
         val empty = delegate.asMapOfRanges().isEmpty()
         if (empty) return true

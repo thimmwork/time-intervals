@@ -17,6 +17,8 @@
 package net.thimmwork.time.interval
 
 import net.thimmwork.time.interval.LocalDateInterval.Companion.parse
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsCollectionContaining.hasItems
 import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertFalse
@@ -121,6 +123,20 @@ class LocalDateIntervalMapTest {
         assertTrue { mapOfLocalDateIntervals[secondHalf2018] == 1}
         assertTrue { map[secondHalf2018.start] == 1}
         assertTrue { map[secondHalf2018.end] == 1}
+    }
+
+    @Test
+    fun `get with interval returns a list of values associated with the interval`() {
+        val map = LocalDateIntervalMap<Int>()
+        map.put(parse("2018-12-01", "2018-12-29"), -1)
+        map.put(parse("2018-12-30", "2019-01-01"), 1)
+        map.put(parse("2019-01-03", "2019-01-03"), 2)
+        map.put(parse("2019-01-04", "2019-01-04"), 3)
+        map.put(parse("2019-02-01", "2019-02-01"), -1)
+
+        val result = map[parse("2019-01-01", "2019-01-31")]
+
+        assertThat(result, hasItems(1, 2, 3))
     }
 }
 
