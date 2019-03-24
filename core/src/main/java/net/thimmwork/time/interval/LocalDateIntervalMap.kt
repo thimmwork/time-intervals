@@ -16,7 +16,6 @@
 
 package net.thimmwork.time.interval
 
-import com.google.common.collect.BoundType
 import com.google.common.collect.Range
 import com.google.common.collect.TreeRangeMap
 import java.time.LocalDate
@@ -37,16 +36,6 @@ class LocalDateIntervalMap<T> {
     fun asMapOfLocalDateIntervals() : Map<LocalDateInterval, T> {
         return delegate.asMapOfRanges()
                 .mapKeys { toLocalDateInterval(it.key) }
-    }
-
-    private fun toLocalDateInterval(range: Range<LocalDate>): LocalDateInterval {
-        val lowerEndpoint : LocalDate =
-                if (range.lowerBoundType() == BoundType.CLOSED) range.lowerEndpoint()
-                else range.lowerEndpoint().plusDays(1)
-        val upperEndpoint =
-                if (range.upperBoundType() == BoundType.CLOSED) range.upperEndpoint()
-                else range.upperEndpoint().minusDays(1)
-        return LocalDateInterval(lowerEndpoint, upperEndpoint)
     }
 
     fun clear() = delegate.clear()

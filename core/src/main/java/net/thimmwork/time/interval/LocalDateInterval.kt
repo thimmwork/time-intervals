@@ -16,6 +16,7 @@
 
 package net.thimmwork.time.interval
 
+import com.google.common.collect.BoundType
 import com.google.common.collect.Range
 import net.thimmwork.time.constant.Infinity
 import java.time.LocalDate
@@ -101,7 +102,9 @@ class LocalDateInterval private constructor(range: Range<LocalDate>)
         return if (overlappingRange == null) null else LocalDateInterval(overlappingRange)
     }
 
-    override fun gap(value: AbstractInterval<LocalDate>) = LocalDateInterval(interval.gap(value.toRange()))
+    override fun gap(value: AbstractInterval<LocalDate>): LocalDateInterval {
+        return toLocalDateInterval(interval.gap(value.toRange()))
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -131,3 +134,12 @@ infix fun LocalDate.downTo(start: LocalDate): Iterable<LocalDate> {
     return LocalDateInterval(start, this).step(-1)
 }
 
+internal fun toLocalDateInterval(range: Range<LocalDate>): LocalDateInterval {
+    val lowerEndpoint : LocalDate =
+            if (range.lowerBoundType() == BoundType.CLOSED) range.lowerEndpoint()
+            else range.lowerEndpoint().plusDays(1)
+    val upperEndpoint =
+            if (range.upperBoundType() == BoundType.CLOSED) range.upperEndpoint()
+            else range.upperEndpoint().minusDays(1)
+    return LocalDateInterval(lowerEndpoint, upperEndpoint)
+}

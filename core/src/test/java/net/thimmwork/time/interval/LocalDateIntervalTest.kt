@@ -110,11 +110,11 @@ class LocalDateIntervalTest {
 
     @Test
     fun `gap returns gap on succeeding interval`() {
-        val jan2nd2019 = LocalDateInterval.parse("2019-01-02T00:00:00", "2019-01-02T00:00:00")
+        val jan2nd2019 = LocalDateInterval.parse("2019-01-02", "2019-01-02")
 
-        assertTrue { interval2018.gap(jan2nd2019) == LocalDateInterval.parse("2019-01-01", "2019-01-02") }
+        assertTrue { val gap = interval2018.gap(jan2nd2019)
+            gap == LocalDateInterval.parse("2019-01-01", "2019-01-01") }
     }
-
 
     @Test
     fun parse() {
