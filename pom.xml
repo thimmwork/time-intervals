@@ -60,6 +60,14 @@
         </dependencies>
     </dependencyManagement>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <scm>
         <connection>scm:git:git://github.com/thimmwork/time-intervals.git</connection>
         <developerConnection>scm:git:git://github.com/thimmwork/time-intervals.git</developerConnection>
