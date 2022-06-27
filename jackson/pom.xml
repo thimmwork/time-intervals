@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.thimmwork</groupId>
         <artifactId>time-intervals-parent</artifactId>
-        <version>1.0</version>
+        <version>0.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>time-intervals-jackson</artifactId>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>net.thimmwork</groupId>
             <artifactId>time-intervals</artifactId>
-            <version>v1.0</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

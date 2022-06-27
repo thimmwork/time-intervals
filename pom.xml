@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>time-intervals-parent</artifactId>
-    <version>1.0</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Time Intervals</name>
@@ -72,7 +72,7 @@
         <connection>scm:git:git://github.com/thimmwork/time-intervals.git</connection>
         <developerConnection>scm:git:git://github.com/thimmwork/time-intervals.git</developerConnection>
         <url>https://github.com/thimmwork/time-intervals/tree/master</url>
-      <tag>v1.0</tag>
+      <tag>v0.2.0</tag>
   </scm>
 
 </project>
