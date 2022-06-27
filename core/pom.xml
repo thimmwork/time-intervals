@@ -5,10 +5,11 @@
     <parent>
         <groupId>net.thimmwork</groupId>
         <artifactId>time-intervals-parent</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>time-intervals</artifactId>
+  <version>v1.0</version>
 
     <dependencies>
         <dependency>
