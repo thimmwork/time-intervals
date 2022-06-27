@@ -33,7 +33,7 @@ import java.util.*
 class InstantIntervalDeserializer : JsonDeserializer<InstantInterval>() {
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): InstantInterval {
-        val map = p.codec.readValue<Map<String, String>>(p, object : TypeReference<HashMap<String, String>>() {})
+        val map: Map<String, String> = p.codec.readValue(p, object : TypeReference<HashMap<String, String>>() {})
         val start = map["start"]?.toInstant() ?: Infinity.INSTANT_INTERVAL.start
         val end = map["end"]?.toInstant() ?: Infinity.INSTANT_INTERVAL.end
         return InstantInterval(start, end)

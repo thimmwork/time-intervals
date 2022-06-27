@@ -33,7 +33,7 @@ import java.util.*
 class LocalDateIntervalDeserializer : JsonDeserializer<LocalDateInterval>() {
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDateInterval {
-        val map = p.codec.readValue<Map<String, String>>(p, object : TypeReference<HashMap<String, String>>() {})
+        val map: Map<String, String> = p.codec.readValue(p, object : TypeReference<HashMap<String, String>>() {})
         val start = map["start"]?.toLocalDate() ?: Infinity.LOCAL_DATE_INTERVAL.start
         val end = map["end"]?.toLocalDate() ?: Infinity.LOCAL_DATE_INTERVAL.end
         return LocalDateInterval(start, end)

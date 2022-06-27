@@ -34,7 +34,7 @@ import java.util.*
 class OffsetDateTimeIntervalDeserializer : JsonDeserializer<OffsetDateTimeInterval>() {
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): OffsetDateTimeInterval {
-        val map = p.codec.readValue<Map<String, String>>(p, object : TypeReference<HashMap<String, String>>() {})
+        val map: Map<String, String> = p.codec.readValue(p, object : TypeReference<HashMap<String, String>>() {})
         val start = map["start"]?.toOffsetDateTime() ?: Infinity.INSTANT_INTERVAL.start.atOffset(ZoneOffset.UTC)
         val end = map["end"]?.toOffsetDateTime() ?: Infinity.INSTANT_INTERVAL.end.atOffset(ZoneOffset.UTC)
         return OffsetDateTimeInterval(start, end)
