@@ -24,7 +24,7 @@
 
         <guava.version>31.1-jre</guava.version>
         <junit.version>4.13.2</junit.version>
-        <kotlin.version>1.7.10</kotlin.version>
+        <kotlin.version>1.7.21</kotlin.version>
     </properties>
 
     <modules>
