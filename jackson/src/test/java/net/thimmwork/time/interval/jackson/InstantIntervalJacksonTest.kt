@@ -20,20 +20,20 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import net.thimmwork.time.interval.InstantInterval
 import net.thimmwork.time.interval.instantInterval
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.time.ZoneId
 
 class InstantIntervalJacksonTest {
 
     private val objectMapper = ObjectMapper()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         objectMapper.registerModule(MODULE)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `deserialize JSON to InstantInterval`() {
         val actualInterval = objectMapper.readValue(
                 "{" +

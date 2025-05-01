@@ -20,14 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import net.thimmwork.time.interval.OffsetDateTimeInterval
 import net.thimmwork.time.interval.OffsetDateTimeInterval.Companion.parse
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class OffsetDateTimeIntervalJacksonTest {
 
     private val objectMapper = ObjectMapper()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         objectMapper.registerModule(MODULE)
     }
@@ -45,7 +45,7 @@ class OffsetDateTimeIntervalJacksonTest {
         assertEquals(expected, actualInterval)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `serialize OffsetDateTimeInterval to JSON`() {
         val instantInterval = parse("2018-01-01T00:00:00+01:00", "2019-01-01T00:00:00+01:00")
         val actualJson = objectMapper.writeValueAsString(instantInterval)

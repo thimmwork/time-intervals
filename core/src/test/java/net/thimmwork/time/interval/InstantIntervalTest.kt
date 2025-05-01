@@ -18,7 +18,9 @@ package net.thimmwork.time.interval
 
 import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
-import org.junit.Test
+import org.junit.Assert.assertThrows
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.OffsetDateTime
 import java.time.OffsetDateTime.parse
 import java.time.ZoneId
@@ -106,11 +108,13 @@ class InstantIntervalTest {
         assertFalse { otherInterval == differentInterval }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `gap throws IllegalArgumentException on overlapping intervals`() {
         val overlappingInterval2018_19 = instantInterval("2018-12-01T00:00:00", "2020-01-01T00:00:00", ZoneId.of("UTC"))
 
-        interval2018utc.gap(overlappingInterval2018_19)
+        assertThrows(IllegalArgumentException::class.java) {
+            interval2018utc.gap(overlappingInterval2018_19)
+        }
     }
 
     @Test

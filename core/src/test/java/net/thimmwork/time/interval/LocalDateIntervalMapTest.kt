@@ -19,7 +19,7 @@ package net.thimmwork.time.interval
 import net.thimmwork.time.interval.LocalDateInterval.Companion.parse
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsCollectionContaining.hasItems
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -41,13 +41,13 @@ class LocalDateIntervalMapTest {
         assertTrue { map[interval2018.end+1] == null }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `when a map is created then it is empty`() {
         val map = LocalDateIntervalMap<Int>()
         assertTrue { map.isEmpty() }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `when an interval is put then the map is not empty - when the interval is removed then it is empty again`() {
         val map = LocalDateIntervalMap<Int>()
 
@@ -58,7 +58,7 @@ class LocalDateIntervalMapTest {
         assertTrue { map.isEmpty() }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `when all partial intervals are removed then the map is empty`() {
         val map = LocalDateIntervalMap<Int>()
 
@@ -83,7 +83,7 @@ class LocalDateIntervalMapTest {
         assertTrue { asMapOfLocalDateIntervals == mapOf(Pair(firstHalf2018, 4711), Pair(secondHalf2018, 4712))  }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun clear() {
         val map = LocalDateIntervalMap<Int>()
         map.put(firstHalf2018, 4711)
@@ -109,7 +109,7 @@ class LocalDateIntervalMapTest {
         assertTrue { map.get(secondHalf2018.start) == 4712 }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `put replaces existing values`() {
         val map = LocalDateIntervalMap<Int>()
         map.put(interval2018, 1)
@@ -125,7 +125,7 @@ class LocalDateIntervalMapTest {
         assertTrue { map[secondHalf2018.end] == 1}
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `get with interval returns a list of values associated with the interval`() {
         val map = LocalDateIntervalMap<Int>()
         map.put(parse("2018-12-01", "2018-12-29"), -1)

@@ -17,7 +17,9 @@
 package net.thimmwork.time.interval
 
 import net.thimmwork.time.interval.LocalDateTimeInterval.Companion.parse
-import org.junit.Test
+import org.junit.Assert.assertThrows
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -141,8 +143,10 @@ class LocalDateTimeIntervalMapTest {
         assertTrue { map.span() == LocalDateTimeInterval(newStart, firstHalf2018.end) }
     }
 
-    @Test(expected = NoSuchElementException::class)
+    @Test
     fun `span throws NoSuchElementException when empty`() {
-        LocalDateTimeIntervalMap<Int>().span()
+        assertThrows(NoSuchElementException::class.java) {
+            LocalDateTimeIntervalMap<Int>().span()
+        }
     }
 }

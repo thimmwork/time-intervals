@@ -16,7 +16,7 @@
 
 package net.thimmwork.time.interval
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDate.parse
 import kotlin.test.assertEquals

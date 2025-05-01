@@ -22,8 +22,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <guava.version>31.1-jre</guava.version>
-        <junit.version>4.13.2</junit.version>
+        <guava.version>33.4.8-jre</guava.version>
+        <junit.version>5.12.1</junit.version>
         <kotlin.version>1.7.10</kotlin.version>
     </properties>
 
@@ -52,8 +52,8 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>

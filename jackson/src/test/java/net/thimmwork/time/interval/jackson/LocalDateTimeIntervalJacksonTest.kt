@@ -20,14 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import net.thimmwork.time.interval.LocalDateTimeInterval
 import net.thimmwork.time.interval.LocalDateTimeInterval.Companion.parse
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class LocalDateTimeIntervalJacksonTest {
 
     private val objectMapper = ObjectMapper()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         objectMapper.registerModule(MODULE)
     }

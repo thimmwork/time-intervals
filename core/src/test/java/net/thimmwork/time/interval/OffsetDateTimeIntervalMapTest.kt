@@ -17,7 +17,8 @@
 package net.thimmwork.time.interval
 
 import net.thimmwork.time.interval.OffsetDateTimeInterval.Companion.parse
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.OffsetDateTime
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -141,8 +142,10 @@ class OffsetDateTimeIntervalMapTest {
         assertTrue { map.span() == OffsetDateTimeInterval(newStart, firstHalf2018.end) }
     }
 
-    @Test(expected = NoSuchElementException::class)
+    @Test
     fun `span throws NoSuchElementException when empty`() {
-        OffsetDateTimeIntervalMap<Int>().span()
+        assertThrows<NoSuchElementException> {
+            OffsetDateTimeIntervalMap<Int>().span()
+        }
     }
 }

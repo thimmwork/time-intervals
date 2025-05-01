@@ -20,19 +20,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import net.thimmwork.time.interval.LocalDateInterval
 import net.thimmwork.time.interval.LocalDateInterval.Companion.parse
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class LocalDateIntervalJacksonTest {
 
     private val objectMapper = ObjectMapper()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         objectMapper.registerModule(MODULE)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `deserialize JSON to LocalDateInterval`() {
         val actualInterval = objectMapper.readValue(
                 "{" +
@@ -45,7 +45,7 @@ class LocalDateIntervalJacksonTest {
         assertEquals(expected, actualInterval)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `serialize LocalDateInterval to JSON`() {
         val localDateInterval = parse("2018-01-01", "2018-12-31")
         val actualJson = objectMapper.writeValueAsString(localDateInterval)

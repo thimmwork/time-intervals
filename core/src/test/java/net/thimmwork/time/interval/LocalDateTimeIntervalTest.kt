@@ -18,7 +18,8 @@ package net.thimmwork.time.interval
 
 import com.google.common.collect.BoundType
 import net.thimmwork.time.constant.Infinity
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime
 import java.time.LocalDateTime.parse
 import kotlin.test.assertEquals
@@ -68,9 +69,11 @@ class LocalDateTimeIntervalTest {
         assertFalse { interval.contains(dateTime) }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `attempt to create interval with end before start will throw IllegalArgumentException`() {
-        LocalDateTimeInterval(parse("2018-12-31T00:00:00.000"), parse("2018-01-01T00:00:00.000"))
+        assertThrows<IllegalArgumentException> {
+            LocalDateTimeInterval(parse("2018-12-31T00:00:00.000"), parse("2018-01-01T00:00:00.000"))
+        }
     }
 
     @Test
@@ -101,11 +104,13 @@ class LocalDateTimeIntervalTest {
         assertFalse { otherInterval == differentInterval }
     }
 
-    @Test(expected = java.lang.IllegalArgumentException::class)
+    @Test
     fun `gap throws IllegalArgumentException on overlapping intervals`() {
         val overlappingInterval2018_19 = LocalDateTimeInterval.parse("2018-12-01T00:00:00", "2020-01-01T00:00:00")
 
-        year2018.gap(overlappingInterval2018_19)
+        assertThrows<IllegalArgumentException> {
+            year2018.gap(overlappingInterval2018_19)
+        }
     }
 
     @Test
