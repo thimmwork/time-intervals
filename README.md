@@ -16,6 +16,16 @@ respectively. This makes calculations and usage a lot easier, because unbound in
 
 To ensure intervals from user input or external sources are within these bounds, use the normalize() function.
 
+### When to use which Java Time data type? ###
+* Instant: When describing a point in time, independent of its location, e.g. when did an event happen? what time is it now?
+* LocalDate: When describing the date as seen by the user or something beginning or ending that is backed by some contract
+* LocalTime: When describing something that (re)occurs at the same local time, independent of daylight saving changes
+* LocalDateTime: When describing a date and time as seen by a user
+* OffsetDateTime: When describing a point in time and a time-distance from UTC
+* ZonedDateTime: When describing a point in time and a location-distance from UTC
+* Period: Something that is reoccurring, e.g. every 3 Months, every 2 days
+* Duration: An interval of fixed length, e.g. 2 minutes and 23 seconds
+
 ### Serialization ###
 As of now, serialization via Jackson is supported. Other means may follow in the near future.
 Feel free to leave a feature request.
