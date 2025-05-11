@@ -20,7 +20,7 @@ import com.google.common.collect.Range
 import com.google.common.collect.TreeRangeMap
 import java.time.OffsetDateTime
 
-class OffsetDateTimeIntervalMap<T> {
+class OffsetDateTimeIntervalMap<T: Any> {
 
     private val delegate = TreeRangeMap.create<OffsetDateTime, T>()
 

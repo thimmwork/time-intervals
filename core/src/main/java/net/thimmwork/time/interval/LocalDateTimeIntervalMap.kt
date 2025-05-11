@@ -20,7 +20,7 @@ import com.google.common.collect.Range
 import com.google.common.collect.TreeRangeMap
 import java.time.LocalDateTime
 
-class LocalDateTimeIntervalMap<T> {
+class LocalDateTimeIntervalMap<T: Any> {
 
     private val delegate = TreeRangeMap.create<LocalDateTime, T>()
 

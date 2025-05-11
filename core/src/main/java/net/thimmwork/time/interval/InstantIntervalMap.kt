@@ -20,7 +20,7 @@ import com.google.common.collect.Range
 import com.google.common.collect.TreeRangeMap
 import java.time.Instant
 
-class InstantIntervalMap<T> {
+class InstantIntervalMap<T: Any> {
 
     private val delegate = TreeRangeMap.create<Instant, T>()
 
